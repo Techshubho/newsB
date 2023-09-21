@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="NewsBeyond.css">
+    <link rel="icon" href="logo.jpg">
+    <title>News Beyond</title>
+</head>
+<body>
+    <nav>
+        <div class="main-nav container flex ">
+            <div class="logo">
+                <img src="logo.jpg" onclick="reload()" alt="company logo" height="70px" width="50px" >
+            </div>
+
+            <div class="nav-link">
+                <ul class="flex">
+                    <li class="hover-link nav-item" id="Cricket" onclick="onNavItemclick('Cricket')">Cricket</li>
+                    <li class="hover-link nav-item" id="Finance" onclick="onNavItemclick('Finance')">Finance</li>
+                    <li class="hover-link nav-item" id="science" onclick="onNavItemclick('science')">science</li>
+                </ul>
+            </div>
+
+            <div class="search-bar flex">
+                <input id="search-text" type="text" class="News-input" placeholder="e.g. IPL">
+                <button id="search-btn" class="search-btn">Search</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="cards-container container flex " id="cards-container">
+            
+        </div>
+    </main>
+
+    <template id="template-news-card">
+        <div class="card">
+            <div class="card-header">
+                <img src="https://picsum.photos/400/200" alt="news-img" id="news-img">
+            </div>
+            <div class="card-content">
+                <h3 id="news-title">This is the title</h3>
+                <h4 class="news-source" id="news-source">End Gadget 2023</h4>
+                <p class="news-desc" id="news-desc">Lorem, ipsum dolor sit amet consectetur adipisicing 
+                    elit. Consectetur alias aliquam doloremque unde nobis?Nulla vitae dolores, voluptate 
+                    laboriosam, dicta itaque repellat quas beatae incidunt delectus deserunt, quod reiciendis fugiat.</p>
+            </div>
+        </div>
+    </template>
+    
+    <script src="NewsBeyond.js"></script>
+</body>
+</html>
