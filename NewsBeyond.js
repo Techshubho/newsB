@@ -1,7 +1,37 @@
-//Api key=44e45ca09279496aae04b160ca8760eb
+const API_KEY = "44e45ca09279496aae04b160ca8760eb";
+const url = "https://newsapi.org/v2/everything?q=";
 
-const API_KEY="44e45ca09279496aae04b160ca8760eb";
-const url="https://newsapi.org/v2/everything?q=";
+// Set the desired HTTP version in the headers
+const headers = new Headers({
+  "Sec-WebSocket-Version": "HTTP/1.1", // You can set this to "HTTP/2" if needed
+});
+
+window.addEventListener("load", () => fetchNews("India"));
+
+function reload() {
+  window.location.reload();
+}
+
+async function fetchNews(query) {
+  const requestOptions = {
+    method: "GET",
+    headers: headers,
+  };
+
+  try {
+    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`, requestOptions);
+    if (res.status === 426) {
+      console.error("HTTP version not supported. Check your headers.");
+      return;
+    }
+    const data = await res.json();
+    bindData(data.articles);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+// Rest of your code remains unchanged...
 
 window.addEventListener("load", () => fetchNews("India"));
 
