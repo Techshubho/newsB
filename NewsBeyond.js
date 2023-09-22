@@ -16,8 +16,10 @@ function fetchNews(query) {
             return res.json();
         })
         .then((data) => {
-            if (data) {
+            if (data && data.articles) {
                 bindData(data.articles);
+            } else {
+                console.error("API response does not contain expected data.");
             }
         })
         .catch((error) => {
@@ -27,6 +29,11 @@ function fetchNews(query) {
 
 function bindData(articles) {
     cardsContainer.innerHTML = '';
+
+    if (!Array.isArray(articles)) {
+        console.error("Invalid data format: articles is not an array.");
+        return;
+    }
 
     articles.forEach((article) => {
         if (!article.urlToImage) {
