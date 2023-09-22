@@ -1,94 +1,80 @@
 const API_KEY = "44e45ca09279496aae04b160ca8760eb";
 const url = "https://newsapi.org/v2/everything?q=";
+const cardsContainer = document.getElementById('cards-container');
+const newsCardTemplate = document.getElementById('template-news-card');
+let curselectedNav = null;
 
 window.addEventListener("load", () => fetchNews("India"));
 
-function reload() {
-  window.location.reload();
+function fetchNews(query) {
+    fetch(`${url}${query}&apiKey=${API_KEY}`)
+        .then((res) => {
+            if (res.status === 426) {
+                console.error("The server requires an upgrade to a newer version of the HTTP protocol.");
+                return;
+            }
+            return res.json();
+        })
+        .then((data) => {
+            if (data) {
+                bindData(data.articles);
+            }
+        })
+        .catch((error) => {
+            console.error("An error occurred:", error);
+        });
 }
 
-async function fetchNews(query) {
-  try {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    if (res.status === 426) {
-      console.error("The server requires an upgrade to a newer version of the HTTP protocol.");
-      return;
-    }
-    const data = await res.json();
-    bindData(data.articles);
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
-}
-
-// Rest of your code remains unchanged...
-
-window.addEventListener("load", () => fetchNews("India"));
-
-function reload(){
-    window.location.reload();
-}
-
-async function fetchNews(query){
-    const res= await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    const data= await res.json();
-    // console.log(data);
-    bindData(data.articles);
-}
-
-function bindData(articles){
-    const cardsContainer =document.getElementById('cards-container');
-    const newsCardTemplate= document.getElementById('template-news-card');
+function bindData(articles) {
     cardsContainer.innerHTML = '';
 
-    articles.forEach(( article) => {
-        if(!article.urlToImage){
+    articles.forEach((article) => {
+        if (!article.urlToImage) {
             return;
         }
- 
-        const cardclone= newsCardTemplate.content.cloneNode(true);
-        fillDataincard(cardclone,article);
-        cardsContainer.appendChild(cardclone);
+
+        const cardClone = newsCardTemplate.content.cloneNode(true);
+        fillDataInCard(cardClone, article);
+        cardsContainer.appendChild(cardClone);
     });
 }
 
-function fillDataincard(cardclone,article) {
-    const newsImg =cardclone.querySelector("#news-img");
-    const newstitle =cardclone.querySelector("#news-title");
-    const newssource =cardclone.querySelector("#news-source");
-    const newsdesc =cardclone.querySelector("#news-desc");
+function fillDataInCard(cardClone, article) {
+    const newsImg = cardClone.querySelector("#news-img");
+    const newsTitle = cardClone.querySelector("#news-title");
+    const newsSource = cardClone.querySelector("#news-source");
+    const newsDesc = cardClone.querySelector("#news-desc");
 
-    newsImg.src=article.urlToImage;
-    newstitle.innerHTML=article.title;
-    newsdesc.innerHTML=article.description;
+    newsImg.src = article.urlToImage;
+    newsTitle.innerHTML = article.title;
+    newsDesc.innerHTML = article.description;
 
-    const date=new Date(article.publishedAt).toLocaleString("en-US",{
+    const date = new Date(article.publishedAt).toLocaleString("en-US", {
         timeZone: "Asia/Jakarta",
     });
 
-    newssource.innerHTML= `${article.source.name}...  ${date}`;
+    newsSource.innerHTML = `${article.source.name}...  ${date}`;
 
-    cardclone.firstElementChild.addEventListener( "click" , () => {
-        window.open(article.url , "_blank");
+    cardClone.firstElementChild.addEventListener("click", () => {
+        window.open(article.url, "_blank");
     });
 }
 
-let curselectedNav=null;
-function onNavItemclick(id){
+function onNavItemclick(id) {
     fetchNews(id);
-    const navitem=document.getElementById(id);
+    const navItem = document.getElementById(id);
     curselectedNav?.classList.remove('active');
-    curselectedNav=navitem;
+    curselectedNav = navItem;
     curselectedNav.classList.add('active');
 }
 
-const searchbutton=document.getElementById('search-btn');
-const searchtext=document.getElementById('search-text');
+const searchButton = document.getElementById('search-btn');
+const searchText = document.getElementById('search-text');
 
-searchbutton.addEventListener('click' ,() => {
-    const query =searchtext.value;
-    if(!query) return;
+searchButton.addEventListener('click', () => {
+    const query = searchText.value;
+    if (!query) return;
     fetchNews(query);
     curselectedNav?.classList.remove('active');
-    curselectedNav =null;
-})
+    curselectedNav = null;
+});
