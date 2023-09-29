@@ -1,5 +1,5 @@
-const API_KEY = "44e45ca09279496aae04b160ca8760eb";
-const url = "https://newsapi.org/v2/everything?q=";
+const API_KEY = "pub_302802b725e9e3618b4dc8b6266eaf6c6a7a5";
+const url = "https://newsdata.io/api/1/news?apikey=pub_302802b725e9e3618b4dc8b6266eaf6c6a7a5&q=pegasus&language=en";
 const cardsContainer = document.getElementById('cards-container');
 const newsCardTemplate = document.getElementById('template-news-card');
 let curselectedNav = null;
