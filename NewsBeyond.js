@@ -3,7 +3,7 @@ const url = "https://newsdata.io/api/1/news?apikey=pub_302802b725e9e3618b4dc8b62
 const cardsContainer = document.getElementById('cards-container');
 const newsCardTemplate = document.getElementById('template-news-card');
 let curselectedNav = null;
-
+// dkdkdk
 window.addEventListener("load", () => fetchNews("India"));
 
 function fetchNews(query) {
